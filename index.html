@@ -14,102 +14,133 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      justify-content: flex-start;
+      height: 100vh;
+      padding-top: 20px;
     }
 
     .container {
       text-align: center;
       padding: 20px;
-      max-width: 600px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
-      font-size: 2rem;
-      color: #444;
+      font-size: 1.8rem;
+      color: #0074c1;
+      margin-bottom: 15px;
     }
 
     p {
       font-size: 1rem;
-      margin: 15px 0;
-      line-height: 1.6;
+      color: #666;
+      margin-bottom: 25px;
     }
 
     .form-container {
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 100%;
     }
 
     .input-group {
-      margin: 10px 0;
       width: 100%;
-      max-width: 400px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    label {
+      font-size: 0.9rem;
+      color: #333;
+      text-align: left;
+      display: block;
+      margin-bottom: 5px;
+      padding-left: 10px;
     }
 
     input[type="text"] {
-      width: 80%;
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-right: 10px;
+      width: 100%;
+      padding: 12px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      box-sizing: border-box;
+      text-align: left;
     }
 
-    button {
-      font-size: 1rem;
-      padding: 10px 20px;
-      margin: 10px 0;
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #0074c1;
+    }
+
+    .button {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.2rem;
       color: #fff;
-      background-color: #007bff;
+      background-color: #0074c1;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s ease;
-      width: 100%;
-      max-width: 300px;
     }
 
-    button:hover {
-      background-color: #0056b3;
+    .button:hover {
+      background-color: #005fa3;
     }
 
-    footer {
+    .footer {
+      margin-top: auto;
       font-size: 0.8rem;
-      margin-top: 20px;
       color: #888;
+      text-align: center;
+      padding-bottom: 10px;
+    }
+
+    footer a {
+      color: #0074c1;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #0074c1;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Vola con Noi - Prenota il tuo volo</h1>
-    <p>
-      Trova e prenota i tuoi voli aerei facilmente. Inserisci il luogo di partenza e il luogo di arrivo.
-    </p>
+    <h1>Vola con Noi</h1>
+    <p>Trova il tuo volo aereo economico in pochi clic.</p>
 
     <div class="form-container">
+      <!-- Partenza -->
       <div class="input-group">
-        <label for="departure">Partenza:</label>
+        <label for="departure">Partenza</label>
         <input type="text" id="departure" placeholder="Inserisci luogo di partenza" onclick="redirectOnClick()">
       </div>
+      
+      <!-- Arrivo -->
       <div class="input-group">
-        <label for="arrival">Arrivo:</label>
+        <label for="arrival">Arrivo</label>
         <input type="text" id="arrival" placeholder="Inserisci luogo di arrivo" onclick="redirectOnClick()">
       </div>
 
-      <button onclick="searchFlights()">Cerca Voli</button>
+      <!-- Pulsante per cercare voli -->
+      <button class="button" onclick="searchFlights()">Cerca Voli</button>
     </div>
   </div>
 
-  <footer>
+  <footer class="footer">
     <p>Simulazione di un sito di prenotazione voli. Powered by <a href="https://www.ispazio.net" target="_blank">ispazio.net</a>.</p>
   </footer>
 

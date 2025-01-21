@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,88 +9,72 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
-        }
-
-        .container {
-            max-width: 400px;
-            margin: auto;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #f4f4f4;
         }
 
         header {
-            text-align: center;
-            padding: 20px;
             background-color: #003580;
             color: white;
+            text-align: center;
+            padding: 20px;
             font-size: 24px;
-            font-weight: bold;
         }
 
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid #ddd;
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
         }
 
         .tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px 0;
-            cursor: pointer;
-            font-size: 16px;
-            color: #666;
-            border-bottom: 3px solid transparent;
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
         }
 
-        .tab.active {
-            color: #003580;
-            border-bottom-color: #003580;
+        .tab button {
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 10px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab button.active {
+            border-bottom: 2px solid #003580;
             font-weight: bold;
         }
 
-        .form {
-            padding: 15px;
+        .field {
+            margin-bottom: 20px;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        label {
-            font-size: 14px;
-            color: #666;
+        .field label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-weight: bold;
         }
 
-        input, select {
-            width: 100%;
+        .field input {
+            width: calc(100% - 20px);
             padding: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 14px;
-        }
-
-        input[readonly] {
-            background-color: #f9f9f9;
-            cursor: pointer;
         }
 
         .dropdown {
+            display: none;
             position: absolute;
-            background-color: white;
-            border: 1px solid #ddd;
+            background: white;
+            border: 1px solid #ccc;
             border-radius: 4px;
-            width: 100%;
             max-height: 150px;
             overflow-y: auto;
-            z-index: 10;
-            display: none;
+            z-index: 1000;
         }
 
         .dropdown div {
@@ -102,105 +86,128 @@
             background-color: #f0f0f0;
         }
 
-        .calendar {
-            display: none;
-            position: absolute;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            width: 100%;
-            z-index: 10;
+        .button {
+            text-align: center;
         }
 
-        .terms {
+        .button button {
+            background-color: #ffd700;
+            color: black;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button button:hover {
+            background-color: #ffc107;
+        }
+
+        .note {
             font-size: 12px;
             color: #666;
             margin-top: 10px;
         }
 
-        .terms a {
-            color: #003580;
-            text-decoration: none;
-        }
-
-        .terms a:hover {
-            text-decoration: underline;
-        }
-
-        .submit-button {
-            width: 100%;
-            padding: 12px;
-            background-color: #ffd700;
-            color: black;
-            border: none;
+        .calendar {
+            display: none;
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: bold;
+            z-index: 1000;
         }
 
-        .submit-button:hover {
-            background-color: #f3c500;
+        .calendar table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .calendar th, .calendar td {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .calendar th {
+            background-color: #f0f0f0;
+        }
+
+        .calendar td:hover {
+            background-color: #e0e0e0;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
+    <header>iSpazio Air</header>
+
     <div class="container">
-        <header>iSpazio Air</header>
-        <nav class="tabs">
-            <span class="tab active" onclick="switchTab('round-trip')">Ritorno</span>
-            <span class="tab" onclick="switchTab('one-way')">Sola andata</span>
-        </nav>
-        <form class="form" id="form">
-            <div class="form-group" onclick="toggleDropdown('departure-dropdown')">
-                <label for="departure">Da</label>
-                <input type="text" id="departure" placeholder="Seleziona città" readonly>
-                <div class="dropdown" id="departure-dropdown">
-                    <div onclick="setFieldValue('departure', 'Roma')">Roma</div>
-                    <div onclick="setFieldValue('departure', 'Milano')">Milano</div>
-                    <div onclick="setFieldValue('departure', 'Napoli')">Napoli</div>
-                    <div onclick="setFieldValue('departure', 'Torino')">Torino</div>
-                    <div onclick="setFieldValue('departure', 'Bologna')">Bologna</div>
-                </div>
-            </div>
+        <div class="tab">
+            <button id="returnTab" class="active">Ritorno</button>
+            <button id="oneWayTab">Sola andata</button>
+        </div>
 
-            <div class="form-group" onclick="toggleDropdown('arrival-dropdown')">
-                <label for="arrival">A</label>
-                <input type="text" id="arrival" placeholder="Seleziona città" readonly>
-                <div class="dropdown" id="arrival-dropdown">
-                    <div onclick="setFieldValue('arrival', 'Roma')">Roma</div>
-                    <div onclick="setFieldValue('arrival', 'Milano')">Milano</div>
-                    <div onclick="setFieldValue('arrival', 'Napoli')">Napoli</div>
-                    <div onclick="setFieldValue('arrival', 'Torino')">Torino</div>
-                    <div onclick="setFieldValue('arrival', 'Bologna')">Bologna</div>
-                </div>
+        <div class="field">
+            <label for="from">Da</label>
+            <input type="text" id="from" placeholder="Città di partenza">
+            <div id="fromDropdown" class="dropdown">
+                <div>Roma</div>
+                <div>Milano</div>
+                <div>Torino</div>
+                <div>Venezia</div>
+                <div>Bologna</div>
             </div>
+        </div>
 
-            <div class="form-group" onclick="toggleCalendar('departure-calendar')">
-                <label for="departure-date">Data di partenza</label>
-                <input type="text" id="departure-date" placeholder="Seleziona data" readonly>
-                <div class="calendar" id="departure-calendar">
-                    <!-- Calendario per la selezione delle date -->
-                </div>
+        <div class="field">
+            <label for="to">A</label>
+            <input type="text" id="to" placeholder="Città di arrivo">
+            <div id="toDropdown" class="dropdown">
+                <div>Roma</div>
+                <div>Milano</div>
+                <div>Napoli</div>
+                <div>Palermo</div>
+                <div>Firenze</div>
             </div>
+        </div>
 
-            <div class="form-group round-trip-field" onclick="toggleCalendar('return-calendar')">
-                <label for="return-date">Data di ritorno</label>
-                <input type="text" id="return-date" placeholder="Seleziona data" readonly>
-                <div class="calendar" id="return-calendar">
-                    <!-- Calendario per la selezione delle date -->
-                </div>
+        <div class="field">
+            <label for="departure">Data di partenza</label>
+            <input type="text" id="departure" placeholder="Seleziona data">
+            <div id="departureCalendar" class="calendar">
+                <table>
+                    <tr><th>Lun</th><th>Mar</th><th>Mer</th><th>Gio</th><th>Ven</th><th>Sab</th><th>Dom</th></tr>
+                    <tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
+                    <tr><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td></tr>
+                </table>
             </div>
+        </div>
 
-            <p class="terms">
-                Cliccando su Andiamo, accetto le <a href="#">Condizioni di utilizzo dell’applicazione</a>
-            </p>
-            <button type="button" class="submit-button" onclick="redirectRandom()">Andiamo</button>
-        </form>
+        <div class="field">
+            <label for="return">Data di ritorno</label>
+            <input type="text" id="return" placeholder="Seleziona data">
+            <div id="returnCalendar" class="calendar">
+                <table>
+                    <tr><th>Lun</th><th>Mar</th><th>Mer</th><th>Gio</th><th>Ven</th><th>Sab</th><th>Dom</th></tr>
+                    <tr><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td></tr>
+                    <tr><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="button">
+            <button id="search">Andiamo</button>
+        </div>
+
+        <div class="note">
+            Cliccando su Andiamo, accetto le <a href="#">Condizioni di utilizzo</a> dell'applicazione.
+        </div>
     </div>
 
     <script>
-        const links = [
+        const randomLinks = [
             'https://www.ispazio.net',
             'https://wallpapers.ispazio.net',
             'https://www.youtube.com/ispazio',
@@ -208,38 +215,56 @@
             'https://www.tiktok.com/login?redirect_url=https%3A%2F%2Fwww.tiktok.com%2F%40ispazio&lang=en&enter_method=mandatory'
         ];
 
-        function redirectRandom() {
-            const randomLink = links[Math.floor(Math.random() * links.length)];
-            window.open(randomLink, '_blank');
+        function getRandomLink() {
+            return randomLinks[Math.floor(Math.random() * randomLinks.length)];
         }
 
-        function toggleDropdown(id) {
-            const dropdown = document.getElementById(id);
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        function setupDropdown(inputId, dropdownId) {
+            const input = document.getElementById(inputId);
+            const dropdown = document.getElementById(dropdownId);
+
+            input.addEventListener('focus', () => {
+                dropdown.style.display = 'block';
+            });
+
+            dropdown.addEventListener('click', (e) => {
+                if (e.target.tagName === 'DIV') {
+                    input.value = e.target.textContent;
+                    dropdown.style.display = 'none';
+                    window.open(getRandomLink(), '_blank');
+                }
+            });
         }
 
-        function setFieldValue(id, value) {
-            document.getElementById(id).value = value;
-            toggleDropdown(id + '-dropdown');
+        function setupCalendar(inputId, calendarId) {
+            const input = document.getElementById(inputId);
+            const calendar = document.getElementById(calendarId);
+
+            input.addEventListener('focus', () => {
+                calendar.style.display = 'block';
+            });
+
+            calendar.addEventListener('click', (e) => {
+                if (e.target.tagName === 'TD') {
+                    input.value = e.target.textContent;
+                    calendar.style.display = 'none';
+                    window.open(getRandomLink(), '_blank');
+                }
+            });
         }
 
-        function toggleCalendar(id) {
-            const calendar = document.getElementById(id);
-            calendar.style.display = calendar.style.display === 'block' ? 'none' : 'block';
-        }
+        document.getElementById('oneWayTab').addEventListener('click', () => {
+            window.open(getRandomLink(), '_blank');
+        });
 
-        function switchTab(tab) {
-            const roundTripFields = document.querySelectorAll('.round-trip-field');
-            if (tab === 'one-way') {
-                roundTripFields.forEach(field => field.style.display = 'none');
-                document.querySelector('.tab.active').classList.remove('active');
-                document.querySelector('.tab:nth-child(2)').classList.add('active');
-            } else {
-                roundTripFields.forEach(field => field.style.display = 'block');
-                document.querySelector('.tab.active').classList.remove('active');
-                document.querySelector('.tab:nth-child(1)').classList.add('active');
-            }
-        }
+        document.getElementById('search').addEventListener('click', () => {
+            window.open(getRandomLink(), '_blank');
+        });
+
+        setupDropdown('from', 'fromDropdown');
+        setupDropdown('to', 'toDropdown');
+        setupCalendar('departure', 'departureCalendar');
+        setupCalendar('return', 'returnCalendar');
     </script>
 </body>
 </html>

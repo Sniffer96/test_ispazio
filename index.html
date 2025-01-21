@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulazione Redirect Automatici</title>
+  <title>Vola con Noi - Prenota il tuo volo</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -21,14 +21,14 @@
     .container {
       text-align: center;
       padding: 20px;
-      max-width: 400px;
+      max-width: 600px;
       background-color: #fff;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
-      font-size: 1.8rem;
+      font-size: 2rem;
       color: #444;
     }
 
@@ -36,6 +36,31 @@
       font-size: 1rem;
       margin: 15px 0;
       line-height: 1.6;
+    }
+
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .input-group {
+      margin: 10px 0;
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
     }
 
     button {
@@ -65,55 +90,42 @@
 </head>
 <body>
   <div class="container">
-    <h1>Simulazione Redirect Automatici</h1>
+    <h1>Vola con Noi - Prenota il tuo volo</h1>
     <p>
-      Questa pagina simula il comportamento dei redirect automatici.<br>
-      Verranno aperte nuove finestre ogni tot secondi, ma solo quando premi il pulsante qui sotto.
+      Trova e prenota i tuoi voli aerei facilmente. Inserisci il luogo di partenza e il luogo di arrivo.
     </p>
-    <button onclick="startRedirects()">Avvia Redirects</button>
+
+    <div class="form-container">
+      <div class="input-group">
+        <label for="departure">Partenza:</label>
+        <input type="text" id="departure" placeholder="Inserisci luogo di partenza" onclick="redirectOnClick()">
+      </div>
+      <div class="input-group">
+        <label for="arrival">Arrivo:</label>
+        <input type="text" id="arrival" placeholder="Inserisci luogo di arrivo" onclick="redirectOnClick()">
+      </div>
+
+      <button onclick="searchFlights()">Cerca Voli</button>
+    </div>
   </div>
 
   <footer>
-    <p>Simulazione creata per dimostrare il funzionamento di blocco pop-up.</p>
+    <p>Simulazione di un sito di prenotazione voli. Powered by <a href="https://www.ispazio.net" target="_blank">ispazio.net</a>.</p>
   </footer>
 
   <script>
-    // URL da aprire in una nuova finestra
-    const redirectUrls = [
-      'https://www.ispazio.net',
-      'https://wallpapers.ispazio.net',
-      'https://www.youtube.com/ispazio',
-      'https://www.instagram.com/rocco_zaccaro/',
-      'https://www.instagram.com/ispazio/',
-      'https://www.tiktok.com/login?redirect_url=https%3A%2F%2Fwww.tiktok.com%2F%40ispazio&lang=en&enter_method=mandatory',
-    ];
+    // URL da aprire in una nuova finestra (quando l'utente clicca sul campo di input)
+    const redirectUrl = 'https://www.ispazio.net';
 
-    let redirectInterval;
-    const intervalTime = 5000; // Intervallo in millisecondi (5000 ms = 5 secondi)
-
-    // Funzione per aprire una nuova finestra in automatico
-    function openRedirect() {
-      const randomUrl = redirectUrls[Math.floor(Math.random() * redirectUrls.length)];
-      window.open(randomUrl, '_blank');
+    // Funzione che esegue il redirect
+    function redirectOnClick() {
+      window.open(redirectUrl, '_blank');
     }
 
-    // Funzione per avviare i redirect
-    function startRedirects() {
-      openRedirect(); // Esegue il primo redirect all'apertura del pulsante
-      redirectInterval = setInterval(openRedirect, intervalTime); // Esegui redirect ogni tot secondi
+    // Funzione per cercare voli (simulata, in realtà non fa nulla)
+    function searchFlights() {
+      alert("Cercando voli... (funzionalità non attiva)");
     }
-
-    // Funzione per fermare i redirect
-    function stopRedirects() {
-      clearInterval(redirectInterval);
-      alert('I redirect automatici sono stati fermati.');
-    }
-
-    // Aggiungi un pulsante per fermare i redirect
-    const stopButton = document.createElement('button');
-    stopButton.textContent = 'Ferma i redirect';
-    stopButton.onclick = stopRedirects;
-    document.querySelector('.container').appendChild(stopButton);
   </script>
 </body>
 </html>

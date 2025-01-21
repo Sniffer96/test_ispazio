@@ -68,9 +68,9 @@
     <h1>Simulazione Redirect Automatici</h1>
     <p>
       Questa pagina simula il comportamento dei redirect automatici.<br>
-      Verranno aperte nuove finestre ogni tot secondi oppure al caricamento.
+      Verranno aperte nuove finestre ogni tot secondi, ma solo quando premi il pulsante qui sotto.
     </p>
-    <button onclick="stopRedirects()">Ferma i redirect</button>
+    <button onclick="startRedirects()">Avvia Redirects</button>
   </div>
 
   <footer>
@@ -86,7 +86,6 @@
       'https://www.instagram.com/rocco_zaccaro/',
       'https://www.instagram.com/ispazio/',
       'https://www.tiktok.com/login?redirect_url=https%3A%2F%2Fwww.tiktok.com%2F%40ispazio&lang=en&enter_method=mandatory',
-
     ];
 
     let redirectInterval;
@@ -98,10 +97,10 @@
       window.open(randomUrl, '_blank');
     }
 
-    // Esegui redirect ogni tot secondi
+    // Funzione per avviare i redirect
     function startRedirects() {
-      openRedirect(); // Esegue il primo redirect all'apertura della pagina
-      redirectInterval = setInterval(openRedirect, intervalTime);
+      openRedirect(); // Esegue il primo redirect all'apertura del pulsante
+      redirectInterval = setInterval(openRedirect, intervalTime); // Esegui redirect ogni tot secondi
     }
 
     // Funzione per fermare i redirect
@@ -110,8 +109,11 @@
       alert('I redirect automatici sono stati fermati.');
     }
 
-    // Avvia i redirect automatici al caricamento della pagina
-    window.onload = startRedirects;
+    // Aggiungi un pulsante per fermare i redirect
+    const stopButton = document.createElement('button');
+    stopButton.textContent = 'Ferma i redirect';
+    stopButton.onclick = stopRedirects;
+    document.querySelector('.container').appendChild(stopButton);
   </script>
 </body>
 </html>

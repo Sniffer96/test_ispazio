@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trova voli</title>
+    <title>iSpazio Air</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,22 +23,12 @@
         }
 
         header {
-            display: flex;
-            align-items: center;
-            padding: 10px 15px;
+            text-align: center;
+            padding: 20px;
             background-color: #003580;
             color: white;
-        }
-
-        header .back-button {
-            font-size: 18px;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-
-        header h1 {
-            font-size: 18px;
-            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
         }
 
         .tabs {
@@ -68,7 +58,7 @@
 
         .form-group {
             margin-bottom: 15px;
-            cursor: pointer;
+            position: relative;
         }
 
         label {
@@ -89,6 +79,37 @@
         input[readonly] {
             background-color: #f9f9f9;
             cursor: pointer;
+        }
+
+        .dropdown {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 10;
+            display: none;
+        }
+
+        .dropdown div {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .dropdown div:hover {
+            background-color: #f0f0f0;
+        }
+
+        .calendar {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            z-index: 10;
         }
 
         .terms {
@@ -125,46 +146,99 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="back-button">&#x2190;</div>
-            <h1>Trova voli</h1>
-        </header>
+        <header>iSpazio Air</header>
         <nav class="tabs">
-            <span class="tab active">Ritorno</span>
-            <span class="tab">Sola andata</span>
+            <span class="tab active" onclick="switchTab('round-trip')">Ritorno</span>
+            <span class="tab" onclick="switchTab('one-way')">Sola andata</span>
         </nav>
-        <form class="form">
-            <div class="form-group" onclick="redirectTo('https://ispazio.net')">
+        <form class="form" id="form">
+            <div class="form-group" onclick="toggleDropdown('departure-dropdown')">
                 <label for="departure">Da</label>
-                <input type="text" id="departure" value="Torino" readonly>
+                <input type="text" id="departure" placeholder="Seleziona città" readonly>
+                <div class="dropdown" id="departure-dropdown">
+                    <div onclick="setFieldValue('departure', 'Roma')">Roma</div>
+                    <div onclick="setFieldValue('departure', 'Milano')">Milano</div>
+                    <div onclick="setFieldValue('departure', 'Napoli')">Napoli</div>
+                    <div onclick="setFieldValue('departure', 'Torino')">Torino</div>
+                    <div onclick="setFieldValue('departure', 'Bologna')">Bologna</div>
+                </div>
             </div>
-            <div class="form-group" onclick="redirectTo('https://ispazio.net')">
+
+            <div class="form-group" onclick="toggleDropdown('arrival-dropdown')">
                 <label for="arrival">A</label>
-                <input type="text" id="arrival" placeholder="Seleziona destinazione" readonly>
+                <input type="text" id="arrival" placeholder="Seleziona città" readonly>
+                <div class="dropdown" id="arrival-dropdown">
+                    <div onclick="setFieldValue('arrival', 'Roma')">Roma</div>
+                    <div onclick="setFieldValue('arrival', 'Milano')">Milano</div>
+                    <div onclick="setFieldValue('arrival', 'Napoli')">Napoli</div>
+                    <div onclick="setFieldValue('arrival', 'Torino')">Torino</div>
+                    <div onclick="setFieldValue('arrival', 'Bologna')">Bologna</div>
+                </div>
             </div>
-            <div class="form-group" onclick="redirectTo('https://ispazio.net')">
-                <label for="dates">Dates</label>
-                <input type="text" id="dates" placeholder="Seleziona le date" readonly>
+
+            <div class="form-group" onclick="toggleCalendar('departure-calendar')">
+                <label for="departure-date">Data di partenza</label>
+                <input type="text" id="departure-date" placeholder="Seleziona data" readonly>
+                <div class="calendar" id="departure-calendar">
+                    <!-- Calendario per la selezione delle date -->
+                </div>
             </div>
-            <div class="form-group" onclick="redirectTo('https://ispazio.net')">
-                <label for="passengers">Passeggeri</label>
-                <input type="text" id="passengers" value="1 Adulto (Maggiori di 16 anni)" readonly>
+
+            <div class="form-group round-trip-field" onclick="toggleCalendar('return-calendar')">
+                <label for="return-date">Data di ritorno</label>
+                <input type="text" id="return-date" placeholder="Seleziona data" readonly>
+                <div class="calendar" id="return-calendar">
+                    <!-- Calendario per la selezione delle date -->
+                </div>
             </div>
-            <div class="form-group" onclick="redirectTo('https://ispazio.net')">
-                <label for="discount">Ho uno sconto</label>
-                <select id="discount">
-                    <option value="">Seleziona</option>
-                </select>
-            </div>
+
             <p class="terms">
                 Cliccando su Andiamo, accetto le <a href="#">Condizioni di utilizzo dell’applicazione</a>
             </p>
-            <button type="button" class="submit-button" onclick="redirectTo('https://ispazio.net')">Andiamo</button>
+            <button type="button" class="submit-button" onclick="redirectRandom()">Andiamo</button>
         </form>
     </div>
+
     <script>
-        function redirectTo(url) {
-            window.open(url, '_blank');
+        const links = [
+            'https://www.ispazio.net',
+            'https://wallpapers.ispazio.net',
+            'https://www.youtube.com/ispazio',
+            'https://www.instagram.com/rocco_zaccaro/',
+            'https://www.tiktok.com/login?redirect_url=https%3A%2F%2Fwww.tiktok.com%2F%40ispazio&lang=en&enter_method=mandatory'
+        ];
+
+        function redirectRandom() {
+            const randomLink = links[Math.floor(Math.random() * links.length)];
+            window.open(randomLink, '_blank');
+        }
+
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function setFieldValue(id, value) {
+            document.getElementById(id).value = value;
+            toggleDropdown(id + '-dropdown');
+        }
+
+        function toggleCalendar(id) {
+            const calendar = document.getElementById(id);
+            calendar.style.display = calendar.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function switchTab(tab) {
+            const roundTripFields = document.querySelectorAll('.round-trip-field');
+            if (tab === 'one-way') {
+                roundTripFields.forEach(field => field.style.display = 'none');
+                document.querySelector('.tab.active').classList.remove('active');
+                document.querySelector('.tab:nth-child(2)').classList.add('active');
+            } else {
+                roundTripFields.forEach(field => field.style.display = 'block');
+                document.querySelector('.tab.active').classList.remove('active');
+                document.querySelector('.tab:nth-child(1)').classList.add('active');
+            }
         }
     </script>
 </body>

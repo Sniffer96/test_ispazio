@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulazione Redirect Automatici</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      max-width: 400px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: #444;
+    }
+
+    p {
+      font-size: 1rem;
+      margin: 15px 0;
+      line-height: 1.6;
+    }
+
+    button {
+      font-size: 1rem;
+      padding: 10px 20px;
+      margin: 10px 0;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    footer {
+      font-size: 0.8rem;
+      margin-top: 20px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Simulazione Redirect Automatici</h1>
+    <p>
+      Questa pagina simula il comportamento dei redirect automatici.<br>
+      Verranno aperte nuove finestre ogni tot secondi oppure al caricamento.
+    </p>
+    <button onclick="stopRedirects()">Ferma i redirect</button>
+  </div>
+
+  <footer>
+    <p>Simulazione creata per dimostrare il funzionamento di blocco pop-up.</p>
+  </footer>
+
+  <script>
+    // URL da aprire in una nuova finestra
+    const redirectUrls = [
+      'https://www.ispazio.net',
+      'https://wallpapers.ispazio.net',
+      'https://www.youtube.com/ispazio',
+      'https://www.instagram.com/rocco_zaccaro/',
+      'https://www.instagram.com/ispazio/',
+      'https://www.tiktok.com/login?redirect_url=https%3A%2F%2Fwww.tiktok.com%2F%40ispazio&lang=en&enter_method=mandatory',
+
+    ];
+
+    let redirectInterval;
+    const intervalTime = 5000; // Intervallo in millisecondi (5000 ms = 5 secondi)
+
+    // Funzione per aprire una nuova finestra in automatico
+    function openRedirect() {
+      const randomUrl = redirectUrls[Math.floor(Math.random() * redirectUrls.length)];
+      window.open(randomUrl, '_blank');
+    }
+
+    // Esegui redirect ogni tot secondi
+    function startRedirects() {
+      openRedirect(); // Esegue il primo redirect all'apertura della pagina
+      redirectInterval = setInterval(openRedirect, intervalTime);
+    }
+
+    // Funzione per fermare i redirect
+    function stopRedirects() {
+      clearInterval(redirectInterval);
+      alert('I redirect automatici sono stati fermati.');
+    }
+
+    // Avvia i redirect automatici al caricamento della pagina
+    window.onload = startRedirects;
+  </script>
+</body>
+</html>

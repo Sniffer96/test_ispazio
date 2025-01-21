@@ -1,162 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vola con Noi - Prenota il tuo volo</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f5f5f5;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      height: 100vh;
-      padding-top: 20px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trova voli</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
 
-    .container {
-      text-align: center;
-      padding: 20px;
-      width: 100%;
-      max-width: 500px;
-      background-color: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    h1 {
-      font-size: 1.8rem;
-      color: #0074c1;
-      margin-bottom: 15px;
-    }
+        header {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #003580;
+            color: white;
+        }
 
-    p {
-      font-size: 1rem;
-      color: #666;
-      margin-bottom: 25px;
-    }
+        header .back-button {
+            font-size: 18px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
 
-    .form-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
+        header h1 {
+            font-size: 18px;
+            margin: 0;
+        }
 
-    .input-group {
-      width: 100%;
-      margin-bottom: 20px;
-      position: relative;
-    }
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
 
-    label {
-      font-size: 0.9rem;
-      color: #333;
-      text-align: left;
-      display: block;
-      margin-bottom: 5px;
-      padding-left: 10px;
-    }
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            border-bottom: 3px solid transparent;
+        }
 
-    input[type="text"] {
-      width: 100%;
-      padding: 12px;
-      font-size: 1.1rem;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      box-sizing: border-box;
-      text-align: left;
-    }
+        .tab.active {
+            color: #003580;
+            border-bottom-color: #003580;
+            font-weight: bold;
+        }
 
-    input[type="text"]:focus {
-      outline: none;
-      border-color: #0074c1;
-    }
+        .form {
+            padding: 15px;
+        }
 
-    .button {
-      width: 100%;
-      padding: 15px;
-      font-size: 1.2rem;
-      color: #fff;
-      background-color: #0074c1;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+        .form-group {
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
 
-    .button:hover {
-      background-color: #005fa3;
-    }
+        label {
+            font-size: 14px;
+            color: #666;
+            display: block;
+            margin-bottom: 5px;
+        }
 
-    .footer {
-      margin-top: auto;
-      font-size: 0.8rem;
-      color: #888;
-      text-align: center;
-      padding-bottom: 10px;
-    }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
 
-    footer a {
-      color: #0074c1;
-      text-decoration: none;
-    }
+        input[readonly] {
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
 
-    footer a:hover {
-      text-decoration: underline;
-    }
+        .terms {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
 
-    .highlight {
-      font-weight: bold;
-      color: #0074c1;
-    }
-  </style>
+        .terms a {
+            color: #003580;
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #ffd700;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .submit-button:hover {
+            background-color: #f3c500;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Vola con Noi</h1>
-    <p>Trova il tuo volo aereo economico in pochi clic.</p>
-
-    <div class="form-container">
-      <!-- Partenza -->
-      <div class="input-group">
-        <label for="departure">Partenza</label>
-        <input type="text" id="departure" placeholder="Inserisci luogo di partenza" onclick="redirectOnClick()">
-      </div>
-      
-      <!-- Arrivo -->
-      <div class="input-group">
-        <label for="arrival">Arrivo</label>
-        <input type="text" id="arrival" placeholder="Inserisci luogo di arrivo" onclick="redirectOnClick()">
-      </div>
-
-      <!-- Pulsante per cercare voli -->
-      <button class="button" onclick="searchFlights()">Cerca Voli</button>
+    <div class="container">
+        <header>
+            <div class="back-button">&#x2190;</div>
+            <h1>Trova voli</h1>
+        </header>
+        <nav class="tabs">
+            <span class="tab active">Ritorno</span>
+            <span class="tab">Sola andata</span>
+        </nav>
+        <form class="form">
+            <div class="form-group" onclick="redirectTo('https://ispazio.net')">
+                <label for="departure">Da</label>
+                <input type="text" id="departure" value="Torino" readonly>
+            </div>
+            <div class="form-group" onclick="redirectTo('https://ispazio.net')">
+                <label for="arrival">A</label>
+                <input type="text" id="arrival" placeholder="Seleziona destinazione" readonly>
+            </div>
+            <div class="form-group" onclick="redirectTo('https://ispazio.net')">
+                <label for="dates">Dates</label>
+                <input type="text" id="dates" placeholder="Seleziona le date" readonly>
+            </div>
+            <div class="form-group" onclick="redirectTo('https://ispazio.net')">
+                <label for="passengers">Passeggeri</label>
+                <input type="text" id="passengers" value="1 Adulto (Maggiori di 16 anni)" readonly>
+            </div>
+            <div class="form-group" onclick="redirectTo('https://ispazio.net')">
+                <label for="discount">Ho uno sconto</label>
+                <select id="discount">
+                    <option value="">Seleziona</option>
+                </select>
+            </div>
+            <p class="terms">
+                Cliccando su Andiamo, accetto le <a href="#">Condizioni di utilizzo dell’applicazione</a>
+            </p>
+            <button type="button" class="submit-button" onclick="redirectTo('https://ispazio.net')">Andiamo</button>
+        </form>
     </div>
-  </div>
-
-  <footer class="footer">
-    <p>Simulazione di un sito di prenotazione voli. Powered by <a href="https://www.ispazio.net" target="_blank">ispazio.net</a>.</p>
-  </footer>
-
-  <script>
-    // URL da aprire in una nuova finestra (quando l'utente clicca sul campo di input)
-    const redirectUrl = 'https://www.ispazio.net';
-
-    // Funzione che esegue il redirect
-    function redirectOnClick() {
-      window.open(redirectUrl, '_blank');
-    }
-
-    // Funzione per cercare voli (simulata, in realtà non fa nulla)
-    function searchFlights() {
-      alert("Cercando voli... (funzionalità non attiva)");
-    }
-  </script>
+    <script>
+        function redirectTo(url) {
+            window.open(url, '_blank');
+        }
+    </script>
 </body>
 </html>
